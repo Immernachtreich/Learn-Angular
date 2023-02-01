@@ -1,0 +1,35 @@
+import { Component, OnInit } from '@angular/core';
+
+import { Tasks } from 'src/app/Tasks';
+import { TaskService } from 'src/app/services/task.service';
+
+@Component({
+    selector: 'app-tasks',
+    templateUrl: './tasks.component.html',
+    styleUrls: ['./tasks.component.css'],
+})
+export class TasksComponent implements OnInit {
+    tasks: Tasks[] = [];
+
+    constructor(private taskService: TaskService) {}
+
+    ngOnInit(): void {
+        this.taskService.getTasks().subscribe((tasks) => {
+            this.tasks = tasks;
+        });
+    }
+
+    deleteTask(task: Tasks): void {
+        this.taskService.deleteTask(task).subscribe(() => {
+            this.tasks = this.tasks.filter(t => t.id !== task.id)
+        })
+    }
+    
+    toggleReminder(task: Tasks) {
+        const updatedTask: Tasks = { ...task, reminder: !task.reminder }
+
+        this.taskService.updateTaskReminder(updatedTask).subscribe((): void => {
+            task.reminder = !task.reminder;
+        })
+    }
+}

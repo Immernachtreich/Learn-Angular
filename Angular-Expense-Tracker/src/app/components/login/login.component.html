@@ -1,0 +1,28 @@
+<h1> Expense Tracker </h1>
+
+<div class="login-form-div">
+
+    <h3> Login </h3>
+
+    <label for="email-input"> Email </label>
+    <input type="email" id="email-input" #emailInput>
+
+    <label for="password-input"> Password </label>
+    <input type="password" id="password-input" #passwordInput>
+
+    <a routerLink="/signup"> Don't have an Account? Click here to Sign up </a>
+
+    <button type="button" (click)="login({ 
+        email: emailInput.value, 
+        password: passwordInput.value })">
+        Sign Up
+    </button>
+</div>
+
+<div class="popup-outer-div" *ngIf="displayPopup">
+    <div class="popup-inner-div">
+        <button (click)="closePopup()"> X </button>
+        <h3> {{ popupHeading }} </h3>
+        <p> {{ popupText }} </p>
+    </div>
+</div>
